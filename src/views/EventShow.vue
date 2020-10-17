@@ -29,21 +29,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+// import { mapState, mapActions } from 'vuex';
 
 export default {
-  props: ['id'], // is ID being passed from query params?
+  props: {
+    event: {
+      type: Object,
+      required: true
+    }
+  }, // is ID being passed from query params?
   created() {
     // this.$store.dispatch('event/fetchEvent', this.id) // without mapActions helper, this is needed
-    this.fetchEvent(this.id)
-  },
-  computed: mapState({
-    event: state => {
-      return state.event.event
-    }
-  }),
-  methods: mapActions('event', ['fetchEvent'])
-}
+    this.fetchEvent(this.id);
+  }
+  // computed: mapState({
+  //   event: state => {
+  //     return state.event.event;
+  //   }
+  // })
+  // methods: mapActions('event', ['fetchEvent'])
+};
 </script>
 <style scoped>
 .location {

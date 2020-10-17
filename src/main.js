@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import 'nprogress/nprogress.css';
+import App from './App.vue';
+import router from './router';
+import store from './store';
 
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
+import upperFirst from 'lodash/upperFirst';
+import camelCase from 'lodash/camelCase';
 
 const requireComponent = require.context(
   // The relative path of the components folder
@@ -13,11 +14,11 @@ const requireComponent = require.context(
   false,
   // The regular expression used to match base component filenames
   /Base[A-Z]\w+\.(vue|js)$/
-)
+);
 
 requireComponent.keys().forEach(fileName => {
   // Get component config
-  const componentConfig = requireComponent(fileName)
+  const componentConfig = requireComponent(fileName);
 
   // Get PascalCase name of component
   const componentName = upperFirst(
@@ -28,7 +29,7 @@ requireComponent.keys().forEach(fileName => {
         .pop()
         .replace(/\.\w+$/, '')
     )
-  )
+  );
   // Register component globally
   Vue.component(
     componentName,
@@ -36,13 +37,13 @@ requireComponent.keys().forEach(fileName => {
     // exist if the component was exported with `export default`,
     // otherwise fall back to module's root.
     componentConfig.default || componentConfig
-  )
-})
+  );
+});
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

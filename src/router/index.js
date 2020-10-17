@@ -1,11 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import nprogress from 'nprogress';
 
-import EventCreate from '../views/EventCreate.vue'
-import EventList from '../views/EventList.vue'
-import EventShow from '../views/EventShow.vue'
+import EventCreate from '../views/EventCreate.vue';
+import EventList from '../views/EventList.vue';
+import EventShow from '../views/EventShow.vue';
+import store from '../store';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -22,14 +24,29 @@ const routes = [
     path: '/event/:id',
     name: 'event-show',
     component: EventShow,
-    props: true
+    props: true,
+    beforeEnter: (to, from, next) => {
+      store.dispatch('event/fetchEvent', to.params.id).then(event => {
+        to.params.event = event;
+        next();
+      });
+    }
   }
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  nprogress.start();
+  next();
+});
+
+router.afterEach(() => {
+  nprogress.done();
+});
+
+export default router;
