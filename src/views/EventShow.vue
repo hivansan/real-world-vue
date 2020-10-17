@@ -40,7 +40,7 @@ export default {
   }, // is ID being passed from query params?
   created() {
     // this.$store.dispatch('event/fetchEvent', this.id) // without mapActions helper, this is needed
-    this.fetchEvent(this.id);
+    // this.fetchEvent(this.id);
   }
   // computed: mapState({
   //   event: state => {

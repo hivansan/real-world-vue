@@ -56,24 +56,27 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
+import Datepicker from 'vuejs-datepicker';
+import nprogress from 'nprogress';
+
 export default {
   components: {
     Datepicker
   },
   data() {
-    const times = []
+    const times = [];
     for (let i = 1; i <= 24; i++) {
-      times.push(i + ':00')
+      times.push(i + ':00');
     }
     return {
       event: this.createFreshEventObject(), // event is createFreshEventObject
       times,
       categories: this.$store.state.categories
-    }
+    };
   },
   methods: {
     createEvent() {
+      nprogress.start();
       this.$store
         .dispatch('event/createEvent', this.event)
         .then(() => {
@@ -81,14 +84,16 @@ export default {
             name: 'event-show',
             // path: '/event',
             params: { id: this.event.id }
-          })
-          this.event = this.createFreshEventObject()
+          });
+          this.event = this.createFreshEventObject();
         })
-        .catch(() => {})
+        .catch(() => {
+          nprogress.done();
+        });
     },
     createFreshEventObject() {
-      const user = this.$store.state.user.user
-      const id = Math.floor(Math.random() * 10000000)
+      const user = this.$store.state.user.user;
+      const id = Math.floor(Math.random() * 10000000);
 
       return {
         id: id,
@@ -100,10 +105,10 @@ export default {
         date: '',
         time: '',
         attendees: []
-      }
+      };
     }
   }
-}
+};
 </script>
 
 <style scoped>

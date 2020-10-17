@@ -5,7 +5,8 @@ export const namespaced = true;
 export const state = {
   events: [],
   event: {},
-  totalPageCount: 100
+  totalPageCount: 100,
+  perPage: 3
 };
 
 export const mutations = {
@@ -43,8 +44,8 @@ export const actions = {
         throw err;
       });
   },
-  fetchEvents({ commit, dispatch }, { perPage, page }) {
-    return EventService.getEvents(perPage, page)
+  fetchEvents({ commit, dispatch, state }, { page }) {
+    return EventService.getEvents(state.perPage, page)
       .then(res => {
         commit('UPDATE_TOTAL_PAGE_COUNT', res.headers['x-total-count']);
         commit('SET_EVENTS', res.data);
