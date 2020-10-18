@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import vuelidate from 'vuelidate';
 import 'nprogress/nprogress.css';
 import App from './App.vue';
 import router from './router';
@@ -39,6 +40,8 @@ requireComponent.keys().forEach(fileName => {
     componentConfig.default || componentConfig
   );
 });
+
+Vue.use(vuelidate);
 
 Vue.config.productionTip = false;
 
